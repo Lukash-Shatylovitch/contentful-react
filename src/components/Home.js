@@ -5,7 +5,7 @@ import { useNavigate } from "react-router-dom";
 export default function Home(props) {
   const navigate = useNavigate();
   const [slides, setSlides] = useState([]);
-
+  console.log(slides);
 
   useEffect(() => {
     client
@@ -17,7 +17,6 @@ export default function Home(props) {
       })
       .catch(console.error);
   }, []);
-
 
   return (
     <>
@@ -53,20 +52,21 @@ export default function Home(props) {
             {slides.map((slide, index) => {
               return (
                 <div
+                  key={slide.sys.id}
                   className={!index ? "carousel-item active" : "carousel-item"}
                 >
                   <img
-                    src={`https:${slide.fields.pic.fields.file.url}`}
+                    src={`https:${slide.fields.image.fields.file.url}`}
                     className="d-block w-100 display-relative"
                     alt="..."
                   />
                   <div className="imgOverlay"></div>
                   <div className="carousel-caption h-100 d-flex flex-column justify-content-center align-items-start">
                     <h5 className="display-4 fw-bolder z-top">
-                      {slide.fields.brand}
-                      <span className="copyright">©</span>
+                      {slide.fields.title}
+                      {/*   <span className="copyright">©</span> */}
                     </h5>
-                    <p className="carousel z-top">{slide.fields.message}</p>
+                    <p className="carousel z-top">{slide.fields.title}</p>
                     <button
                       onClick={() => {
                         navigate(`/recipes`);
@@ -109,10 +109,6 @@ export default function Home(props) {
           <span className="visually-hidden">Next</span>
         </button>
       </div>
-
-      
     </>
   );
 }
-
-        
